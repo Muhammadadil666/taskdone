@@ -1,0 +1,86 @@
+/* Shared by index / privacy / support.
+   i.html deliberately carries its own copy of everything it needs: it's the
+   critical path for an invite, and a 404 on this file must not be able to
+   break it. */
+
+:root {
+  --field-top: #030308;
+  --field-mid: #2A1FC4;
+  --field-bottom: #4436FF;
+  --accent: #6A5CFF;
+  --ink: #fff;
+  --ink-dim: rgba(255, 255, 255, 0.74);
+  --ink-faint: rgba(255, 255, 255, 0.48);
+  --hair: rgba(255, 255, 255, 0.22);
+  --glass: rgba(255, 255, 255, 0.10);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 40px 24px 64px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+  /* Fixed so the gradient doesn't repeat down a long legal page. */
+  background: linear-gradient(180deg, var(--field-top) 0%, var(--field-mid) 55%, var(--field-bottom) 100%)
+              fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap { width: 100%; max-width: 640px; margin: 0 auto; }
+.narrow { max-width: 420px; text-align: center; }
+
+.mark {
+  font-size: 30px; font-weight: 800; letter-spacing: -1px;
+  line-height: 1; text-decoration: none; color: var(--ink);
+  display: inline-block; margin-bottom: 40px;
+}
+.mark .accent { color: var(--accent); }
+
+h1 {
+  font-size: 44px; line-height: 1.0; letter-spacing: -1.6px;
+  margin: 0 0 14px; font-weight: 800;
+}
+h2 {
+  font-size: 20px; letter-spacing: -0.4px; font-weight: 700;
+  margin: 36px 0 10px;
+}
+p, li { font-size: 16px; line-height: 1.6; color: var(--ink-dim); margin: 0 0 14px; }
+ul { padding-left: 20px; margin: 0 0 14px; }
+li { margin-bottom: 8px; }
+strong { color: var(--ink); font-weight: 650; }
+a { color: var(--ink); }
+
+.lede { font-size: 18px; color: var(--ink-dim); }
+.stamp { font-size: 13px; color: var(--ink-faint); margin-bottom: 8px; }
+
+.card {
+  background: var(--glass);
+  border: 1px solid var(--hair);
+  border-radius: 22px;
+  padding: 20px 22px;
+  margin: 0 0 14px;
+}
+.card p:last-child, .card ul:last-child { margin-bottom: 0; }
+
+a.btn {
+  display: block; padding: 19px; border-radius: 31px;
+  font-size: 19px; font-weight: 700; text-decoration: none;
+  margin-bottom: 12px;
+}
+.primary { background: #fff; color: var(--field-bottom); }
+.secondary { background: rgba(255,255,255,0.12); color: #fff; border: 1px solid var(--hair); }
+
+footer {
+  margin-top: 48px; padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.14);
+  font-size: 13px; color: var(--ink-faint);
+}
+footer a { color: var(--ink-dim); margin-right: 16px; }
+
+@media (max-width: 480px) {
+  h1 { font-size: 36px; letter-spacing: -1.2px; }
+  body { padding: 28px 20px 48px; }
+}
