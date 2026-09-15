@@ -4,33 +4,117 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TaskDone — shared habits, no streaks</title>
-<meta name="description" content="Add what you want to do. Tick it off when you've done it. Share tasks with the people you live or work with. No streaks, no guilt.">
+<meta name="description" content="Add what you want to do. Tick it off when you've done it. Share tasks with the people you live or work with. No streaks, no guilt, no subscription.">
+
+<meta property="og:title" content="TaskDone — shared habits, no streaks">
+<meta property="og:description" content="Miss a day and nothing resets. Share tasks with the people who matter. Free, with no ads and no account required.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://muhammadadil666.github.io/taskdone/">
+<meta property="og:image" content="https://muhammadadil666.github.io/taskdone/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/icon.png">
+<link rel="apple-touch-icon" href="assets/icon.png">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div class="wrap">
-    <span class="mark">task<span class="accent">done</span></span>
+<body class="landing">
 
+  <nav class="nav">
+    <a class="mark" href="./">
+      <img src="assets/icon.png" alt="">
+      <!-- One element, not a bare text node: inside a flex row the loose text
+           becomes its own item and the gap splits the wordmark in half. -->
+      <span>task<span class="accent">done</span></span>
+    </a>
+    <a class="cta small" href="https://apps.apple.com/app/id6802647143">Get it free</a>
+  </nav>
+
+  <header class="hero home">
     <h1>Get your stuff<br>together.</h1>
     <p class="lede">Add what you want to do. Tick it off when you've done it. That's the whole app.</p>
+    <a class="cta" href="https://apps.apple.com/app/id6802647143">Download on the App Store</a>
+    <img class="hero-shot" src="assets/app-home.jpg"
+         alt="A day of tasks in TaskDone, some ticked off" loading="lazy">
+  </header>
 
-    <h2>No streaks. Ever.</h2>
-    <p>Miss a day and nothing resets. There's no counter to protect and no guilt for coming back after a busy week — you can go back and tick off any day you like, whenever you like.</p>
+  <section class="statement home">
+    <h2>No streaks.<br>Ever.</h2>
+    <p>Most habit apps punish you for having a life. TaskDone doesn't count consecutive days, because a number that resets when you get ill or go on holiday isn't motivation — it's a reason to quit. Miss a day and nothing happens. Come back whenever, go to any past day, and tick things off then.</p>
+  </section>
 
-    <h2>Share the load</h2>
-    <p>Add the people you live or work with by sending them a link. Once they accept, you're connected both ways: either of you can hand the other a task, and you can see when it's done. No groups, no admin, no nagging.</p>
+  <section class="split home">
+    <div>
+      <p class="section-label">Sharing</p>
+      <h2>Share the load with people who matter.</h2>
+      <p>Add the people you live or work with by sending them a link. Once they accept you're connected both ways — either of you can hand the other a task, and you can see when it's done.</p>
+      <p>No groups to manage. No admin. Nobody gets added without an invite you sent or a code you typed yourself. If someone's forgotten, one gentle nudge tells them which task you mean.</p>
+    </div>
+    <img src="assets/share.jpg" alt="Two people carrying something together at sunset" loading="lazy">
+  </section>
 
-    <h2>Yours, on your phone</h2>
-    <p>TaskDone works fully without an account. Signing in with Apple is only needed if you want to share with someone — and even then, we only ever ask Apple for your name.</p>
+  <section class="home">
+    <div class="shots">
+      <img src="assets/app-add.jpg" alt="Adding a task, choosing its type and schedule" loading="lazy">
+      <img src="assets/app-home.jpg" alt="A day of tasks, some ticked off" loading="lazy">
+      <img src="assets/app-more.jpg" alt="Settings: appearance, alerts and sharing" loading="lazy">
+    </div>
+  </section>
 
-    <h2>Free</h2>
-    <p>No subscription and no ads. If you want to support it there's a tip jar in the app, and that's the only thing you can ever pay for.</p>
+  <section class="statement home">
+    <h2>Built for real weeks.</h2>
+  </section>
 
+  <section class="home">
+    <div class="grid">
+      <div class="tile">
+        <h3>Any schedule</h3>
+        <p>Daily, chosen weekdays, a set number of times a week, or a one-off on a date.</p>
+      </div>
+      <div class="tile">
+        <h3>Carry over</h3>
+        <p>A one-off with no fixed date rolls forward until it's actually done.</p>
+      </div>
+      <div class="tile">
+        <h3>Count things</h3>
+        <p>Not just ticks — 2L of water, 8,000 steps, 30 pages. Record the number.</p>
+      </div>
+      <div class="tile">
+        <h3>Fill in the past</h3>
+        <p>Tick off any earlier day. TaskDone records the day it counts for, not the day you opened the app.</p>
+      </div>
+      <div class="tile">
+        <h3>Skip one day</h3>
+        <p>Drop a single occurrence of a repeating task without losing the whole thing.</p>
+      </div>
+      <div class="tile">
+        <h3>Quiet hours</h3>
+        <p>Reminders when you want them, silence when you don't.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="statement home">
+    <h2>Yours.</h2>
+    <p>TaskDone works completely without an account. Sign in only if you want to share — and even then we ask Apple for your name and nothing else. No email, no contacts, no tracking, no ads, no analytics. Your profile picture never leaves your phone.</p>
+    <p style="margin-top:18px"><a href="privacy.html" style="color:var(--ink-dim)">Read the privacy policy →</a></p>
+  </section>
+
+  <section class="statement home" style="padding-bottom:20px">
+    <h2>Free. Actually free.</h2>
+    <p>Not a trial, not a freemium ladder. Every feature is free forever. There's a tip jar if you'd like to support it, and it unlocks nothing, because there's nothing to unlock.</p>
+    <p style="margin-top:34px">
+      <a class="cta" href="https://apps.apple.com/app/id6802647143">Download on the App Store</a>
+    </p>
+  </section>
+
+  <div class="home">
     <footer>
       <a href="privacy.html">Privacy</a>
       <a href="support.html">Support</a>
+      <a href="https://apps.apple.com/app/id6802647143">App Store</a>
       <div style="margin-top:12px">© 2026 KANECT FZE-LLC</div>
     </footer>
   </div>
+
 </body>
 </html>
