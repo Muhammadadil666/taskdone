@@ -2,67 +2,174 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>You've been invited to Kindo</title>
+<meta name="description" content="Someone wants to share tasks with you on Kindo.">
+<meta property="og:title" content="You've been invited to Kindo">
+<meta property="og:description" content="Someone wants to share tasks with you. Open the invite to connect.">
 <style>
+  /* Everything the invite needs lives in this one file: it's the critical
+     path for a new connection, and a missing stylesheet must not break it. */
+  @font-face {
+    font-family: "Cal Sans";
+    src: url("assets/CalSans-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+    font-display: swap;
+  }
   :root {
-    --field-top: #030308;
-    --field-mid: #2A1FC4;
-    --field-bottom: #4436FF;
-    --ink: #08080C;
+    --top: #5F8CD6;
+    --bottom: #8CB6EA;
+    --ink: #141414;
+    --sun: #F4D06F;
+    --cream: #FFF8EE;
   }
   * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow-x: hidden; }
   body {
-    margin: 0;
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100dvh;
+    display: flex; flex-direction: column;
+    overflow-x: hidden;
+    font-family: "Cal Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 600;
     color: #fff;
-    background: linear-gradient(180deg, var(--field-top) 0%, var(--field-mid) 55%, var(--field-bottom) 100%);
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='76' viewBox='0 0 420 76'%3E%3Cpath d='M0 38 C70 20 140 20 210 38 S350 56 420 38' fill='none' stroke='white' stroke-opacity='0.09' stroke-width='1.6'/%3E%3C/svg%3E") repeat,
+      linear-gradient(180deg, var(--top) 0%, var(--bottom) 100%);
+    background-attachment: fixed;
   }
-  .card { width: 100%; max-width: 380px; text-align: center; }
+  main {
+    position: relative;
+    z-index: 2;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: calc(56px + env(safe-area-inset-top)) 24px 24px;
+    text-align: center;
+  }
+  .brand {
+    display: inline-flex; align-items: flex-end; gap: 8px;
+    font-size: 26px; letter-spacing: -0.8px;
+  }
+  .brand img { height: 42px; }
   h1 {
-    font-size: 44px; line-height: 0.95; letter-spacing: -1.6px;
-    margin: 0 0 6px; font-weight: 800;
+    font-size: 46px; line-height: 0.98; letter-spacing: -1.6px;
+    margin: 26px 0 12px; font-weight: 600;
   }
-  h1 .accent { color: #6A5CFF; }
-  p { font-size: 16px; line-height: 1.5; color: rgba(255,255,255,0.74); margin: 0 0 24px; }
+  p.lede {
+    font-size: 17px; line-height: 1.45; margin: 0 auto 28px; max-width: 320px;
+    color: rgba(255,255,255,0.86); font-weight: 600;
+  }
+  /* The code: a cream sticker with an ink outline and a hard ink shadow,
+     slightly tilted, like the app's stickers. */
   .code {
-    font-size: 34px; font-weight: 800; letter-spacing: 6px;
-    padding: 18px; border-radius: 22px;
-    background: rgba(255,255,255,0.17);
-    border: 1px solid rgba(255,255,255,0.22);
-    margin-bottom: 10px;
+    display: inline-block;
+    font-size: 34px; letter-spacing: 6px;
+    padding: 16px 24px 16px 30px;
+    color: var(--ink);
+    background: var(--cream);
+    border: 2px solid var(--ink);
+    border-radius: 20px;
+    box-shadow: 4px 5px 0 var(--ink);
+    transform: rotate(-2deg);
   }
-  .hint { font-size: 13px; color: rgba(255,255,255,0.48); margin-bottom: 28px; }
-  a.btn {
-    display: block; padding: 19px; border-radius: 31px;
-    font-size: 19px; font-weight: 700; text-decoration: none;
+  .codeRow {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    margin-bottom: 30px;
+  }
+  .copy {
+    display: inline-flex; align-items: center; gap: 6px;
+    font: inherit; font-size: 15px; color: var(--ink);
+    background: var(--sun);
+    border: 2px solid var(--ink); border-radius: 999px;
+    box-shadow: 2px 3px 0 var(--ink);
+    padding: 10px 14px; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .copy:active { transform: translate(2px, 3px); box-shadow: none; }
+  .copy svg { width: 16px; height: 16px; }
+  /* "Copied" — a small ink pill that rises in and fades, like the app's toasts. */
+  .toast {
+    position: fixed; left: 50%; top: calc(16px + env(safe-area-inset-top));
+    transform: translate(-50%, -16px); opacity: 0;
+    background: var(--ink); color: #fff;
+    font-size: 15px; padding: 12px 18px; border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: opacity .2s, transform .25s;
+    z-index: 5; pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .toast i {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: var(--sun); color: var(--ink);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-style: normal; font-size: 12px;
+  }
+  .btn {
+    display: block; width: 100%;
+    padding: 18px; border-radius: 999px;
+    font-size: 18px; text-decoration: none; text-align: center;
     margin-bottom: 12px;
   }
-  .primary { background: #fff; color: var(--field-bottom); }
+  .primary { background: var(--ink); color: #fff; }
   .secondary {
-    background: rgba(255,255,255,0.12); color: #fff;
-    border: 1px solid rgba(255,255,255,0.22);
+    background: #fff; color: var(--ink);
+    border: 2px solid var(--ink);
   }
-  footer { margin-top: 28px; font-size: 12px; color: rgba(255,255,255,0.4); }
+  .hint {
+    font-size: 14px; line-height: 1.5; margin: 18px auto 0; max-width: 320px;
+    color: rgba(255,255,255,0.82);
+  }
+  .hint strong { color: #fff; font-weight: 600; }
+  /* The stickers, dropped into a pile along the bottom, like the splash. */
+  .pile {
+    /* Below the content, pinned to the bottom of the page, never over it. */
+    position: relative; height: 260px; margin-top: auto; flex: none;
+    /* Clip only the sides (stickers hang off them without widening the
+       page); the tops are free to rise above the pile. */
+    clip-path: inset(-400px 0 0 0);
+    pointer-events: none; z-index: 1;
+  }
+  .pile img {
+    position: absolute; width: 150px;
+    filter: drop-shadow(0 6px 8px rgba(0,0,0,0.18));
+    animation: drop 0.7s cubic-bezier(.3,1.4,.5,1) both;
+  }
+  @keyframes drop { from { transform: translateY(-120vh) rotate(var(--r0)); } to { transform: translateY(0) rotate(var(--r)); } }
+  @media (prefers-reduced-motion: reduce) { .pile img { animation: none; transform: rotate(var(--r)); } }
+  @media (min-width: 700px) { .pile img { width: 190px; } }
 </style>
 </head>
 <body>
-  <div class="card">
-    <h1>task<br><span class="accent">done</span></h1>
-    <p>Someone wants to share tasks with you. Open the invite below — you'll both be able to assign tasks to each other.</p>
+  <main>
+    <div class="brand"><img src="assets/dino.png" alt="">Kindo</div>
+    <h1>You're invited</h1>
+    <p class="lede">Someone wants to share tasks with you. Open the invite and you'll be connected, so you can give each other tasks.</p>
 
-    <div class="code" id="code">········</div>
-    <div class="hint">If the app doesn't open, install it and paste this code under My People → Invite.</div>
+    <div class="codeRow">
+      <div class="code" id="code">········</div>
+      <button class="copy" id="copy" type="button" aria-label="Copy the code">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
+        Copy
+      </button>
+    </div>
 
     <a class="btn primary" id="open" href="#">Open in Kindo</a>
-    <a class="btn secondary" id="store" href="https://apps.apple.com/app/id6802647143">Get Kindo</a>
+    <a class="btn secondary" id="store" href="https://apps.apple.com/app/id6802647143">Get Kindo on the App Store</a>
 
-    <footer>No account needed to try the app. Sign in only to share.</footer>
+    <p class="hint">Just installed it? Open Kindo, go to <strong>More → Friends &amp; Family → Join</strong> and type the code above.</p>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"><i>✓</i>Copied</div>
+
+  <div class="pile" aria-hidden="true">
+    <img src="assets/sticker-moon.png"      style="right:-30px; bottom:120px; --r:16deg; --r0:40deg; animation-delay:.05s">
+    <img src="assets/sticker-water.png"     style="left:-24px;  bottom:110px; --r:-14deg; --r0:-40deg; animation-delay:.12s">
+    <img src="assets/sticker-book.png"      style="left:44%;    bottom:84px;  --r:-10deg; --r0:20deg; animation-delay:.2s">
+    <img src="assets/sticker-shoes.png"     style="left:14%;    bottom:62px;  --r:8deg;   --r0:-30deg; animation-delay:.28s">
+    <img src="assets/sticker-checklist.png" style="right:-12px; bottom:28px;  --r:12deg;  --r0:36deg; animation-delay:.36s">
+    <img src="assets/sticker-clock.png"     style="left:56%;    bottom:-8px;  --r:-8deg;  --r0:-24deg; animation-delay:.44s">
+    <img src="assets/sticker-coffee.png"    style="left:-18px;  bottom:-14px; --r:-10deg; --r0:-30deg; animation-delay:.52s">
+    <img src="assets/sticker-plant.png"     style="left:28%;    bottom:-30px; --r:6deg;   --r0:30deg; animation-delay:.6s">
   </div>
 
 <script>
@@ -74,9 +181,34 @@
     document.getElementById('code').textContent = token;
     document.getElementById('open').href = 'taskdone://invite/' + token;
   } else {
-    document.getElementById('code').textContent = 'invalid';
+    document.getElementById('code').textContent = 'No code';
     document.getElementById('open').style.display = 'none';
+    document.getElementById('copy').style.display = 'none';
   }
+
+  // Copy the code (for typing into Join), with a "Copied" toast.
+  var toast = document.getElementById('toast'), hide;
+  function copied() {
+    toast.classList.add('show');
+    clearTimeout(hide);
+    hide = setTimeout(function () { toast.classList.remove("show"); }, 2000);
+  }
+  function fallbackCopy() {
+    var t = document.createElement('textarea');
+    t.value = token; t.setAttribute('readonly', ''); t.style.position = 'absolute'; t.style.left = '-9999px';
+    document.body.appendChild(t); t.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(t);
+  }
+  document.getElementById('copy').addEventListener('click', function () {
+    if (!valid) return;
+    copied();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(token).catch(fallbackCopy);
+    } else {
+      fallbackCopy();
+    }
+  });
 
   // Try the app straight away, but only from a real tap-through on iOS —
   // firing it unconditionally shows an ugly failure dialog on desktop.
